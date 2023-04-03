@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  tiny_url:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - zookeeper
+      - mongodb
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - ZOOKEEPER_HOSTS=zookeeper:2181
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=tiny_url
+
+  redis:
+    image: redis:6.2-alpine
+
+  zookeeper:
+    image: zookeeper:3.6.3
+
+  mongodb:
+    image: mongo:5.0.6
+    environment:
+      MONGO_INITDB_DATABASE: tiny_url
+    ports:
+      - "27017:27017"
