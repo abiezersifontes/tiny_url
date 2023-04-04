@@ -9,9 +9,12 @@ that would be 17.565.568.854.912 more than the double that we could get in 5 yea
 The service has cron to delete the date expired urls, and reset the counter. Regarding the Cache every url is caches for 1 hour.
 
 # Install
+
+As the service is dockerized you only need to have docker and docker-compose installed as a prerequisite
+
 ```docker-compose up --build```
 
 # Follow ups
-1. add stadistics
-2. make the redireccion awnser faster
-3. delete could be async
+1. make the redireccion awnser faster
+2. delete could be async
+3. test for the cron of delete expired urls

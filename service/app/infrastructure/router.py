@@ -12,7 +12,7 @@ from service.app.infrastructure.repositories.stats import StatsRepository
 router = APIRouter()
 
 
-@router.post("/url")
+@router.post("/")
 async def create_url(body: UrlData):
     """create a short url for the long one and save them at the db"""
     # call the the service function
@@ -21,7 +21,7 @@ async def create_url(body: UrlData):
     return JSONResponse({"tiny_url": url}, 201)
 
 
-@router.get("/url/{url_str}")
+@router.get("/{url_str}")
 async def get_url(url_str):
     """Return a redirect response 307"""
     stats = StatsRepository()
@@ -36,7 +36,7 @@ async def get_url(url_str):
 
 
 
-@router.delete("/url/{url_str}")
+@router.delete("/{url_str}")
 async def delete_url(url_str):
     """delete the record in the database for the previusly created url"""
     res = ServiceUrl(
@@ -45,7 +45,7 @@ async def delete_url(url_str):
 
     return JSONResponse({"deleted":res})
 
-@router.get("/stats")
+@router.get("/stats/all")
 async def get_stats():
     """Return the stats of the service"""
     stats = StatsRepository()
