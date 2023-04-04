@@ -10,8 +10,11 @@ services:
       - zookeeper
       - mongodb
     environment:
+      - BASE_URL=http://localhost:8000/url/
       - REDIS_URL=redis://redis:6379/0
       - ZOOKEEPER_HOSTS=zookeeper:2181
+      - ZOOKEEPER_PATH=/tinyurls/chunk0
+      - MONGO_URL=mongodb://root:example@mongodb:27017
       - MONGODB_HOST=mongodb
       - MONGODB_PORT=27017
       - MONGODB_DATABASE=tiny_url
@@ -26,5 +29,7 @@ services:
     image: mongo:5.0.6
     environment:
       MONGO_INITDB_DATABASE: tiny_url
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - "27017:27017"

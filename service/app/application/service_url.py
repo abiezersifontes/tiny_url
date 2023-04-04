@@ -31,11 +31,10 @@ class ServiceUrl:
 
     async def get_url(self, url_str) -> str:
         url = f"{get_settings().base_url}{url_str}"
-        print(url)
         cached_url = await self.cache.get(key=url)
         if cached_url is not None:
             return cached_url
-        db_url = await self.store.get_url(url)
+        db_url = self.store.get_url(url)
         if db_url is not None:
             await self.cache.set(key=url, value=db_url, expire=3600)
         return db_url

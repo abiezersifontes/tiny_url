@@ -24,7 +24,7 @@ class MongoDB(StoreRepository):
             }
         )
 
-    async def get_url(self, short_url: str) -> str:
+    def get_url(self, short_url: str) -> str:
         if result := self.collection.find_one({"short_url": short_url}):
             return result.get("long_url")
         return None

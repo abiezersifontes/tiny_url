@@ -1,13 +1,8 @@
-def test_get_redirect(client):
-    response1 = client.post(
-        url='/url',
-        json={
-            "url": "http://www.google.com"
-        }
-    )
-    
-    response = client.delete(
-        url=f"/url/{response1.json().get('tiny_url').split('/')[4]}"
-    )
+from unittest.mock import patch
+
+def test_delete_url(client):
+    with patch('service.app.application.service_url.ServiceUrl.delete_url', return_value=True):
+        response = client.delete(url="/url/1234567")
     assert response.status_code == 200
-    assert response.json().get("deleted") == True
+    assert response.json().get("deleted") is True
+

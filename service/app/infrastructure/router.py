@@ -22,12 +22,13 @@ async def create_url(body: UrlData):
 @router.get("/url/{url_str}")
 async def get_url(url_str):
     """Return a redirect response 307"""
-    res = ServiceUrl(
+    res = await ServiceUrl(
         conf_repository=ZookeeperRepo(), store=MongoDB(), cache=RedisRepo()
     ).get_url(url_str=url_str)
-    if not res:
-        HTMLResponse("<h1>There is no Url<h1>")
-    return RedirectResponse(res)
+    if res:
+        return RedirectResponse(res)
+    return HTMLResponse("<h1>There is no Url<h1>")
+
 
 
 @router.delete("/url/{url_str}")
@@ -36,5 +37,5 @@ async def delete_url(url_str):
     res = ServiceUrl(
         conf_repository=ZookeeperRepo(), store=MongoDB(), cache=RedisRepo()
     ).delete_url(url_str=url_str)
-    
+
     return JSONResponse({"deleted":res})

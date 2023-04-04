@@ -6,6 +6,8 @@ the service has an stimation of 50.000 request per second if a day which has 86.
 In order to catch that we plan to use a combination of 78 posible characters with a long of 7 characters 
 that would be 17.565.568.854.912 more than the double that we could get in 5 years with our stimated requests
 
+The service has cron to delete the date expired urls, and reset the counter
+
 # Install
 ```docker-compose up --build```
 
