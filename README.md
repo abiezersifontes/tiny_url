@@ -6,12 +6,12 @@ the service has an stimation of 50.000 request per second if a day which has 86.
 In order to catch that we plan to use a combination of 78 posible characters with a long of 7 characters 
 that would be 17.565.568.854.912 more than the double that we could get in 5 years with our stimated requests
 
-The service has cron to delete the date expired urls, and reset the counter
+The service has cron to delete the date expired urls, and reset the counter. Regarding the Cache every url is caches for 1 hour.
 
 # Install
 ```docker-compose up --build```
 
 # Follow ups
-1. create the docker file and the docker-compose file
-2. delete could be async
-3. get could return a html response if the url is not found
+1. add stadistics
+2. make the redireccion awnser faster
+3. delete could be async

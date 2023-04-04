@@ -15,15 +15,19 @@ class RedisRepo(CacheRepository):
         await self.redis.wait_closed()
 
     async def get(self, key: str) -> str:
-        await self.connect()
+        if self.redis is None:
+            await self.connect()
         return await self.redis.get(key)
 
     async def set(self, key: str, value: str, expire: int = None) -> None:
-        await self.connect()
+        if self.redis is None:
+            await self.connect()
         if expire is not None:
             await self.redis.setex(key, expire, value)
         else:
             await self.redis.set(key, value)
 
     async def delete(self, key: str) -> None:
+        if self.redis is None:
+            await self.connect()
         await self.redis.delete(key)
