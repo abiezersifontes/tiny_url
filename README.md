@@ -8,6 +8,8 @@ that would be 17.565.568.854.912 more than the double that we could get in 5 yea
 
 The service has cron to delete the date expired urls, and reset the counter. Regarding the Cache every url is caches for 1 hour.
 
+the next is a quick diagram of the service https://sketchboard.me/xDKbxDlfzIy#/ is importante to say that every one of the services could be scaled in order to get more performance
+
 # Install
 
 As the service is dockerized you only need to have docker and docker-compose installed as a prerequisite
