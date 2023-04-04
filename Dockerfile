@@ -15,6 +15,4 @@ COPY . .
 # Copy the .env.example file and rename it to .env
 COPY .env.example .env
 
-# WORKDIR /service
-
-CMD ["python", "-m", "service"]
+CMD ["uvicorn", "service:deploy_local_app", "--port", "8000", "--host", "0.0.0.0"]

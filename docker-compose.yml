@@ -18,12 +18,13 @@ services:
       - MONGODB_HOST=mongodb
       - MONGODB_PORT=27017
       - MONGODB_DATABASE=tiny_url
-
+    command: sh -c "python service/app/infrastructure/zookeeper_init.py && uvicorn service:deploy_local_app --port 8000 --host 0.0.0.0"
   redis:
     image: redis:6.2-alpine
 
   zookeeper:
     image: zookeeper:3.6.3
+
 
   mongodb:
     image: mongo:5.0.6
