@@ -1,11 +1,11 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime, timedelta
-from service.app.infrastructure.repositories.mongo_db import MongoDB
+from service.app.infrastructure.repositories.urls_mongo import UrlsMongo
 from service.app.infrastructure.repositories.zookeeper_repo import ZookeeperRepo
 
 async def delete_old_urls():
     # Connect to the MongoDB and Zookeeper repositories
-    mongo = MongoDB()
+    mongo = UrlsMongo()
     zk = ZookeeperRepo()
 
     # Calculate the date one year ago

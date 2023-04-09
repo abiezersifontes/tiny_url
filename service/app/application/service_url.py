@@ -17,7 +17,7 @@ class ServiceUrl:
         self.cache = cache
 
     def generate_url(self, url: str) -> str:
-        """Generate the tiny url"""
+        """Generate the tiny url and save it in the database and in the cache"""
         start, end = self.conf_repository.get_range()
         sequence = ""
         index = start
@@ -27,9 +27,11 @@ class ServiceUrl:
         short_url = f"{get_settings().base_url}{sequence}"
         self.conf_repository.update_range()
         asyncio.create_task(self.store.save_url(short_url=short_url, long_url=url))
+        asyncio.create_task(self.cache.set(key=url, value=url, expire=3600))
         return short_url
 
     async def get_url(self, url_str) -> str:
+        """Return the long url from the tiny url"""
         url = f"{get_settings().base_url}{url_str}"
         cached_url = await self.cache.get(key=url)
         if cached_url is not None:
@@ -39,6 +41,10 @@ class ServiceUrl:
             await self.cache.set(key=url, value=db_url, expire=3600)
         return db_url
 
-    def delete_url(self, url_str) -> bool:
+    async def delete_url(self, url_str) -> bool:
+        """Delete the record in the database and in the cache for the previusly created url"""
         url = f"{get_settings().base_url}{url_str}"
-        return self.store.delete_url(url)
+        cached_url = await self.cache.get(key=url)
+        if cached_url is not None:
+            await self.cache.delete(key=url)
+        return await self.store.delete_url(url)

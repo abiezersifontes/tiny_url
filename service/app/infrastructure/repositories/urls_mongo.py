@@ -7,7 +7,7 @@ from service.settings import get_settings
 from service.app.domain.repositories.store_repository import StoreRepository
 
 
-class MongoDB(StoreRepository):
+class UrlsMongo(StoreRepository):
     """Mongo Class"""
     def __init__(self):
         self.client = MongoClient(host=get_settings().mongo_url)
@@ -29,7 +29,7 @@ class MongoDB(StoreRepository):
             return result.get("long_url")
         return None
 
-    def delete_url(self, short_url: str) -> bool:
+    async def delete_url(self, short_url: str) -> bool:
         result = self.collection.delete_one({"short_url":short_url})
         return result.deleted_count == 1
 

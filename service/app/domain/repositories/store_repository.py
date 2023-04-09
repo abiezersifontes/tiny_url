@@ -11,5 +11,5 @@ class StoreRepository(abc.ABC):
         """get url"""
 
     @abc.abstractmethod
-    def delete_url(self, short_url: str) -> bool:
+    async def delete_url(self, short_url: str) -> bool:
         """delete url"""

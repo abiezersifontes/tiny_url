@@ -16,7 +16,3 @@ As the service is dockerized you only need to have docker and docker-compose ins
 
 ```docker-compose up --build```
 
-# Follow ups
-1. make the redireccion awnser faster
-2. delete could be async
-3. test for the cron of delete expired urls
