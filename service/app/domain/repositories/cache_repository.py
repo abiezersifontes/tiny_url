@@ -1,22 +1,24 @@
+"""Cache repository interface."""
 from abc import ABC, abstractmethod
 
 class CacheRepository(ABC):
+    """Cache repository interface."""
     @abstractmethod
     async def connect(self):
-        pass
-    
-    @abstractmethod
-    async def disconnect(self):
-        pass
+        """Connect to cache."""
 
     @abstractmethod
-    def get(self, key: str) -> str:
-        pass
-    
+    async def disconnect(self):
+        """Disconnect from cache."""
+
     @abstractmethod
-    def set(self, key: str, value: str, expire: int = None) -> None:
-        pass
+    async def get(self, key: str) -> str:
+        """Get value from cache."""
+
+    @abstractmethod
+    async def set(self, key: str, value: str, expire: int = None) -> None:
+        """Set value to cache."""
 
     @abstractmethod
     async def delete(self, key: str) -> None:
-        pass
+        """Delete value from cache."""

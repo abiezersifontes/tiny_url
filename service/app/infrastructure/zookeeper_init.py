@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
         # Define the path and value
         path = '/tinyurls/chunk0'
-        value = b'{"start": 0, "end": 1000000}'
+        value = b'{"start": 0, "end": 17565568854912}'
 
         # Create the parent path if it doesn't exist
         try:

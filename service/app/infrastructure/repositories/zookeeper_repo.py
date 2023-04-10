@@ -1,6 +1,5 @@
 """Implementation of Generate Url"""
 import json
-import asyncio
 from typing import List
 from kazoo.client import KazooClient
 from service.settings import get_settings
@@ -14,7 +13,6 @@ class ZookeeperRepo(ConfigurationRepository):
         self.zk.start()
         self.zk_path = get_settings().zookeeper_path
         self.counter, self.end_range = self._load_counter()
-        self.range_lock = asyncio.Lock()
 
     def _load_counter(self) -> int:
         data, _ = self.zk.get(self.zk_path)
@@ -37,8 +35,6 @@ class ZookeeperRepo(ConfigurationRepository):
 
     def set_range(self, start: int, end: int) -> None:
         """Sets the range of numbers in ZooKeeper"""
-        if start < self.counter:
-            raise ValueError("start value cannot be less than the current counter")
         data = {"start": start, "end": end}
         return self.zk.set(self.zk_path, json.dumps(data).encode())
 

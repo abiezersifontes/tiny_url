@@ -38,7 +38,7 @@ class ServiceUrl:
             return cached_url
         db_url = self.store.get_url(url)
         if db_url is not None:
-            await self.cache.set(key=url, value=db_url, expire=3600)
+            asyncio.create_task(self.cache.set(key=url, value=db_url, expire=3600))
         return db_url
 
     async def delete_url(self, url_str) -> bool:

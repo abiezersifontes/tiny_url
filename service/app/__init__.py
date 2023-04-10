@@ -1,6 +1,6 @@
 """Create the app Instance"""
-from fastapi import FastAPI
-from service.app.infrastructure.cron import schedule_cron_job
+from fastapi import FastAPI, BackgroundTasks
+from service.app.infrastructure.cron import delete_old_urls
 
 def create_app() -> FastAPI:
     """Create the app instance"""
@@ -8,8 +8,12 @@ def create_app() -> FastAPI:
 
     app: FastAPI = FastAPI()
 
-    app.include_router(router)
+    @app.on_event("startup")
+    async def startup_event():
+        background_tasks = BackgroundTasks()
+        background_tasks.add_task(delete_old_urls)
+        await background_tasks()
 
-    schedule_cron_job()
+    app.include_router(router)
 
     return app
