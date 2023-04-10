@@ -12,7 +12,7 @@ async def delete_old_urls():
     zk = ZookeeperRepo()
 
     # Calculate the date one year ago
-    one_year_ago = datetime.utcnow() - timedelta(seconds=10)
+    one_year_ago = datetime.utcnow() - timedelta(days=365)
 
     # Delete the old URLs from the MongoDB repository
     mongo.collection.delete_many({'created': {'$lt': one_year_ago}})
