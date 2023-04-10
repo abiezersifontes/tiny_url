@@ -16,7 +16,7 @@ class ServiceUrl:
         self.store = store
         self.cache = cache
 
-    def generate_url(self, url: str) -> str:
+    async def generate_url(self, url: str) -> str:
         """Generate the tiny url and save it in the database and in the cache"""
         start, end = self.conf_repository.get_range()
         sequence = ""
@@ -26,7 +26,7 @@ class ServiceUrl:
             sequence += self.ascii_chars[remainder]
         short_url = f"{get_settings().base_url}{sequence}"
         self.conf_repository.update_range()
-        asyncio.create_task(self.store.save_url(short_url=short_url, long_url=url))
+        await self.store.save_url(short_url=short_url, long_url=url)
         asyncio.create_task(self.cache.set(key=url, value=url, expire=3600))
         return short_url
 

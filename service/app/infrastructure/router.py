@@ -16,7 +16,7 @@ router = APIRouter()
 async def create_url(body: UrlData):
     """create a short url for the long one and save them at the db"""
     # call the the service function
-    url = ServiceUrl(conf_repository=ZookeeperRepo(), store=UrlsMongo(), cache=RedisRepo()).generate_url(url=str(body.url))
+    url = await ServiceUrl(conf_repository=ZookeeperRepo(), store=UrlsMongo(), cache=RedisRepo()).generate_url(url=str(body.url))
     # return new url created
     return JSONResponse({"tiny_url": url}, 201)
 
